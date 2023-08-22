@@ -13,18 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: SSH into AWS instance
-        uses: webfactory/ssh-agent@v0.5.2
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-          known_hosts: |
-            54.87.160.87 ssh-rsa ${{ secrets.SSH_PUBLIC_KEY }}
-          ssh-config: |
-            Host aws-instance
-                HostName 54.87.160.87
-                User ec2-user
-
-      - name: Create and write to hello.txt
+      - name: Run command on AWS instance
         run: |
-          ssh aws-instance 'echo "Hello from GitHub Workflow" > hello.txt'
+          ssh -o StrictHostKeyChecking=no ec2-user@54.87.160.87 'echo "Hello from GitHub Workflow"'
 
