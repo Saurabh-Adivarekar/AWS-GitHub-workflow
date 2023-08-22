@@ -1,0 +1,31 @@
+name: AWS Instance Actions
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: SSH into AWS instance
+        uses: webfactory/ssh-agent@v0.5.2
+        with:
+          ssh-private-key: ${{ secrets.YOUR_AWS_PRIVATE_KEY }}
+          known_hosts: |
+            your.instance.ip.address ssh-rsa ${{ secrets.YOUR_SSH_PUBLIC_KEY }}
+          ssh-config: |
+            Host aws-instance
+                HostName your.instance.ip.address
+                User ec2-user
+
+      - name: Create and write to hello.txt
+        run: |
+          ssh aws-instance 'echo "Hello from GitHub Workflow" > hello.txt'
+
+
