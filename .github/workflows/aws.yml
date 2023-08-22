@@ -15,5 +15,5 @@ jobs:
 
       - name: Run command on AWS instance
         run: |
-          ssh -o StrictHostKeyChecking=no Github_user@54.87.160.87 'echo "Hello from GitHub Workflow"'
+          ssh Github_user@54.87.160.87 'echo "Hello from GitHub Workflow"'
 
