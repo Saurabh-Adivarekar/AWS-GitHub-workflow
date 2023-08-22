@@ -16,16 +16,15 @@ jobs:
       - name: SSH into AWS instance
         uses: webfactory/ssh-agent@v0.5.2
         with:
-          ssh-private-key: ${{ secrets.YOUR_AWS_PRIVATE_KEY }}
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           known_hosts: |
-            your.instance.ip.address ssh-rsa ${{ secrets.YOUR_SSH_PUBLIC_KEY }}
+            54.87.160.87 ssh-rsa ${{ secrets.SSH_PUBLIC_KEY }}
           ssh-config: |
             Host aws-instance
-                HostName your.instance.ip.address
+                HostName 54.87.160.87
                 User ec2-user
 
       - name: Create and write to hello.txt
         run: |
           ssh aws-instance 'echo "Hello from GitHub Workflow" > hello.txt'
-
 
